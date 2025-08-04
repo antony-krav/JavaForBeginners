@@ -1,26 +1,76 @@
 package ru.JavaForBeginners.attestation01;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Person {
     private String name;
-    private int moneyAmount;
-    private ArrayList <Product> products;
+    private double moneyAmount;
+    private ArrayList<Product> products;
 
-    Person(String name, int moneyAmount) {
-        this.name = name;
-        this.moneyAmount = moneyAmount;
-        this.products = new ArrayList<Product>();
+    Person(String name, double moneyAmount) {
+        setName(name);
+        setMoneyAmount(moneyAmount);
+        this.products = new ArrayList<>();
     }
 
     Person(String name) {
-        this.name = name;
-        this.moneyAmount = 0;
-        this.products = new ArrayList<Product>();
+        setName(name);
+        this.moneyAmount = .0;
+        this.products = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", moneyAmount=" + moneyAmount +
+                ", products=" + products +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return moneyAmount == person.moneyAmount
+                && Objects.equals(name, person.name)
+                && Objects.equals(products, person.products);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, moneyAmount, products);
     }
 
     public String getName() {
         return name;
+    }
+
+    public double getMoneyAmount() {
+        return moneyAmount;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setName(String name) {
+        if(name == null || name.length() < 3) {
+            throw new IllegalArgumentException("Имя не может быть короче 3 символов");
+        }
+        this.name = name;
+    }
+
+    public void setMoneyAmount(double moneyAmount) {
+        if(moneyAmount < .0) {
+            throw new IllegalArgumentException("Деньги не могут быть отрицательным числом");
+        }
+        this.moneyAmount = moneyAmount;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
     }
 
     public void buy(Product product) {
@@ -32,5 +82,4 @@ public class Person {
             System.out.println(this.name + " не может позволить себе " + product.getProductName());
         }
     }
-
 }

@@ -5,11 +5,9 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-//        Product bread = new Product("Хлеб", 40);
-//        Person Mike = new Person("Павел Андреевич", 10000);
-//        Mike.buy(bread);
-        ArrayList<Person> persons = new ArrayList<Person>();
-        ArrayList<Product> products = new ArrayList<Product>();
+
+        ArrayList<Person> persons = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
         System.out.println("Добро пожаловать в систему.");
 
         while (true) {
@@ -40,8 +38,8 @@ public class App {
 
                     break;
                 case "3":
-                    int indexPerson = -1;
-                    int indexProduct = -1;
+                    int indexPerson;
+                    int indexProduct;
                     System.out.println("Выберите покупателя:");
                     for (int i = 0; i < persons.size(); i++) {
                         System.out.println(i + "\t- " + persons.get(i).getName());
