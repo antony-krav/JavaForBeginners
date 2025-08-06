@@ -5,61 +5,80 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-
         ArrayList<Person> persons = new ArrayList<>();
         ArrayList<Product> products = new ArrayList<>();
-        System.out.println("Добро пожаловать в систему.");
 
+        System.out.println("Введите через ';' список покупателей в формате: Имя = сумма покупки");
+        Scanner scanner = new Scanner(System.in);
+
+        String input = scanner.nextLine();
+        String[] personsArray = input.split(";");
+        for (String person : personsArray) {
+            String[] temp = person.split("=");
+            String name = temp[0].trim();
+            double money = Double.parseDouble(temp[1].trim());
+            persons.add(new Person(name, money));
+        }
+
+        System.out.println("Введите через ';' список продуктов в формате: Название = цена");
+        input = scanner.nextLine();
+        String[] productArray = input.split(";");
+        for (String product : productArray) {
+            String[] temp = product.split("=");
+            String name = temp[0].trim();
+            double price = Double.parseDouble(temp[1].trim());
+            products.add(new Product(name, price));
+        }
+
+        System.out.println("Введите покупку в формате: Имя_Покупателя - Название_Продукта. Для выхода введите END");
         while (true) {
-            System.out.println("""
-                    1\t- зарегистрировать покупателя
-                    2\t- зарегистрировать товар
-                    3\t- совершить продажу
-                    END\t - выход""");
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
-            switch (input) {
-                case "1":
-                    System.out.println("Введите имя и отчество покупателя:");
-                    String personName = scanner.nextLine();
-                    System.out.println("Введите сумму денег покупателя:");
-                    int personMoney = scanner.nextInt();
-                    persons.add(new Person(personName, personMoney));
-                    System.out.println("Покупатель " + personName + " успешно зарегистрирован.\n");
+            input = scanner.nextLine();
+            if (input.equals("END")) break;
 
-                    break;
-                case "2":
-                    System.out.println("Введите название продукта:");
-                    String productName = scanner.nextLine();
-                    System.out.println("Введите стоимость продукта:");
-                    int price = scanner.nextInt();
-                    products.add(new Product(productName, price));
-                    System.out.println("Продукт " + productName + " успешно зарегистрирован.\n");
+            String[] temp = input.split("-");
+            String person = temp[0].trim();
+            String product = temp[1].trim();
 
+            Person curPerson = null;
+            Product curProduct = null;
+
+            for (Person p : persons) {
+                if (p.getName().equals(person)) {
+                    curPerson = p;
                     break;
-                case "3":
-                    int indexPerson;
-                    int indexProduct;
-                    System.out.println("Выберите покупателя:");
-                    for (int i = 0; i < persons.size(); i++) {
-                        System.out.println(i + "\t- " + persons.get(i).getName());
-                    }
-                    indexPerson = scanner.nextInt();
-                    System.out.println("Выберите продукт:");
-                    for (int i = 0; i < products.size(); i++) {
-                        System.out.println(i + "\t- " + products.get(i).getProductName());
-                    }
-                    indexProduct = scanner.nextInt();
-                    persons.get(indexPerson).buy(products.get(indexProduct));
-                    break;
-                case "END":
-                    break;
-                default:
-                    System.err.println("Неверный ввод. Повторите попытку");
+                }
             }
-            if (input.equals("END")) {
-                break;
+
+            for (Product p : products) {
+                if (p.getProductName().equals(product)) {
+                    curProduct = p;
+                    break;
+                }
+            }
+
+            if (curPerson != null & curProduct != null) {
+                curPerson.buy(curProduct);
+            } else {
+                System.err.println("Продукт или покупатель не найден. Повторите ввод");
             }
         }
+        System.out.println();
+
+        for (Person p : persons) {
+            System.out.print(p.getName() + " - ");
+            if (p.getProducts().isEmpty()) {
+                System.out.println("Ничего не куплено");
+            } else {
+                for (int i = 0; i < p.getProducts().size(); i++) {
+                    System.out.print(p.getProducts().get(i).getProductName());
+                    if (i < p.getProducts().size() - 1) {
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println();
+            }
+        }
+
+        scanner.close();
     }
 }

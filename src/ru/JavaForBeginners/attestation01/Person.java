@@ -56,15 +56,20 @@ public class Person {
     }
 
     public void setName(String name) {
-        if(name == null || name.length() < 3) {
+        if (name == null) {
+            System.err.println("Имя не может быть пустым");
+            throw new IllegalArgumentException("Имя не может быть пустым");
+        } else if (name.length() < 3) {
+            System.err.println("Имя не может быть короче 3 символов");
             throw new IllegalArgumentException("Имя не может быть короче 3 символов");
-        }
-        this.name = name;
+        } else
+            this.name = name;
     }
 
     public void setMoneyAmount(double moneyAmount) {
-        if(moneyAmount < .0) {
-            throw new IllegalArgumentException("Деньги не могут быть отрицательным числом");
+        if (moneyAmount < .0) {
+            System.err.println("Деньги не могут быть отрицательными");
+            throw new IllegalArgumentException("Деньги не могут быть отрицательными");
         }
         this.moneyAmount = moneyAmount;
     }
@@ -79,7 +84,7 @@ public class Person {
             this.products.add(product);
             System.out.println(this.name + " купил " + product.getProductName());
         } else {
-            System.out.println(this.name + " не может позволить себе " + product.getProductName());
+            System.err.println(this.name + " не может позволить себе " + product.getProductName());
         }
     }
 }

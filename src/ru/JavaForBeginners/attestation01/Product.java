@@ -40,14 +40,14 @@ public class Product {
     }
 
     public void setProductName(String productName) {
-        if(productName == null){
+        if (productName == null) {
             throw new IllegalArgumentException("Название продукта не может быть пустой строкой");
         }
         this.productName = productName;
     }
 
     public void setPrice(double price) {
-        if(price < 0) {
+        if (price < 0) {
             throw new IllegalArgumentException("Стоимость продукта не может быть отрицательным числом");
         }
         this.price = price;
