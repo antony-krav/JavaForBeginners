@@ -1,5 +1,6 @@
 package ru.JavaForBeginners.homework07;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,13 +22,25 @@ public class App {
         }
 
         System.out.println("Введите через ';' список продуктов в формате: Название = цена");
+        System.out.println("Для скидочных продуктов используйте формат: Название = цена = размер_скидки (0 - 100) = " +
+                "срок_действия (ГГГГ-ММ-ДД)");
         input = scanner.nextLine();
         String[] productArray = input.split(";");
         for (String product : productArray) {
             String[] temp = product.split("=");
-            String name = temp[0].trim();
-            double price = Double.parseDouble(temp[1].trim());
-            products.add(new Product(name, price));
+            if (temp.length == 2) {
+                String name = temp[0].trim();
+                double price = Double.parseDouble(temp[1].trim());
+                products.add(new Product(name, price));
+            } else if (temp.length == 4) {
+                String name = temp[0].trim();
+                double price = Double.parseDouble(temp[1].trim());
+                double discount = Double.parseDouble(temp[2].trim());
+                LocalDate expiryDate = LocalDate.parse(temp[3].trim());
+                products.add(new DiscountProduct(name, price, discount, expiryDate));
+            } else {
+                System.err.println("Аттрибуты введены неверно");
+            }
         }
 
         System.out.println("Введите покупку в формате: Имя_Покупателя - Название_Продукта. Для выхода введите END");
