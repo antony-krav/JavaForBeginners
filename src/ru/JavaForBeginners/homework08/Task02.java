@@ -26,7 +26,7 @@ public class Task02 {
         Arrays.sort(tArr);
 
         return Arrays.equals(sArr, tArr);
-        }
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
