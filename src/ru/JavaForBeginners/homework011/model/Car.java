@@ -1,4 +1,4 @@
-package ru.JavaForBeginners.homework011;
+package ru.JavaForBeginners.homework011.model;
 
 import java.util.Objects;
 
