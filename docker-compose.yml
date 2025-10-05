@@ -1,0 +1,12 @@
+# docker-compose up  - terminal
+version: "3.9"
+services:
+  postgres:
+    container_name: finalAttestation
+    image: postgres
+    environment:
+      POSTGRES_DB: orders_db
+      POSTGRES_USER: orders_user
+      POSTGRES_PASSWORD: orders_user_password
+    ports:
+      - "5432:5432"
